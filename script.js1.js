@@ -6,9 +6,9 @@ import {
     getDatabase,
     ref,
     onValue,
-    runTransaction
+    runTransaction,
+    update
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
 
 
 /* =========================================================
@@ -44,16 +44,21 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-
 const db = getDatabase(app);
 
 
-
 /* =========================================================
-   INICIAR QUANDO A PÁGINA CARREGAR
+   INICIAR
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    const body = document.body;
+    const categoria = body.dataset.categoria;
+
+    if (!categoria) {
+        return;
+    }
 
 
     /* =====================================================
@@ -65,72 +70,36 @@ document.addEventListener("DOMContentLoaded", function () {
             ".presente-card button"
         );
 
-
     const modal =
         document.getElementById(
             "modal-presente"
         );
-
 
     const fecharModal =
         document.getElementById(
             "fechar-modal"
         );
 
-
     const cancelar =
         document.getElementById(
             "modal-cancelar"
         );
-
 
     const nomePresenteModal =
         document.getElementById(
             "modal-nome-presente"
         );
 
-
     const nomeInput =
         document.getElementById(
             "nome-convidado"
         );
-
 
     const confirmar =
         document.getElementById(
             "modal-confirmar"
         );
 
-
-    const body =
-        document.body;
-
-
-    /*
-       Identifica automaticamente a categoria
-       através de:
-
-       <body data-categoria="cozinha">
-    */
-
-    const categoria =
-        body.dataset.categoria;
-
-
-    /*
-       Se a página não for uma página
-       de categoria, não faz nada.
-    */
-
-    if (!categoria) {
-        return;
-    }
-
-
-    /*
-       Se algum elemento essencial não existir,
-       evita erro no JavaScript.
-    */
 
     if (
         !modal ||
@@ -146,43 +115,29 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
         return;
-
     }
 
-
-
-    /* =====================================================
-       VARIÁVEL DO CARTÃO SELECIONADO
-    ===================================================== */
 
     let cardSelecionado = null;
 
 
-
     /* =====================================================
-       FUNÇÃO — BLOQUEAR CARTÃO
+       MARCAR COMO ESCOLHIDO
+       
+       IMPORTANTE:
+       Não mostra o nome da pessoa.
     ===================================================== */
 
-    function marcarComoEscolhido(
-        card,
-        dados
-    ) {
+    function marcarComoEscolhido(card) {
 
         if (!card) {
             return;
         }
 
-
-        card.classList.add(
-            "escolhido"
-        );
-
+        card.classList.add("escolhido");
 
         const botao =
-            card.querySelector(
-                "button"
-            );
-
+            card.querySelector("button");
 
         if (botao) {
 
@@ -190,7 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Presente já escolhido";
 
             botao.disabled = true;
-
         }
 
 
@@ -198,7 +152,6 @@ document.addEventListener("DOMContentLoaded", function () {
             card.querySelector(
                 ".presente-status"
             );
-
 
         if (!status) {
 
@@ -210,23 +163,20 @@ document.addEventListener("DOMContentLoaded", function () {
             status.className =
                 "presente-status";
 
-            card.appendChild(
-                status
-            );
-
+            card.appendChild(status);
         }
 
+        /*
+           NÃO colocamos o nome aqui.
+        */
 
         status.textContent =
-            "Escolhido por " +
-            dados.nome;
-
+            "Este presente já foi escolhido.";
     }
 
 
-
     /* =====================================================
-       FUNÇÃO — LIBERAR CARTÃO
+       LIBERAR CARTÃO
     ===================================================== */
 
     function liberarCartao(card) {
@@ -235,17 +185,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
-        card.classList.remove(
-            "escolhido"
-        );
-
+        card.classList.remove("escolhido");
 
         const botao =
-            card.querySelector(
-                "button"
-            );
-
+            card.querySelector("button");
 
         if (botao) {
 
@@ -253,49 +196,41 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Escolher presente";
 
             botao.disabled = false;
-
         }
-
 
         const status =
             card.querySelector(
                 ".presente-status"
             );
 
-
         if (status) {
-
             status.remove();
-
         }
-
     }
 
 
-
     /* =====================================================
-       ESCUTAR FIREBASE
+       STATUS PÚBLICO DOS PRESENTES
+       
+       Aqui NÃO existem nomes.
+       
+       Caminho:
+       status-presentes/cozinha/presente-001
     ===================================================== */
 
-    const presentesRef =
+    const statusRef =
         ref(
             db,
-            "presentes/" + categoria
+            "status-presentes/" + categoria
         );
 
 
     onValue(
-        presentesRef,
+        statusRef,
         function (snapshot) {
 
             const dados =
                 snapshot.val() || {};
-
-
-            /*
-               Atualiza todos os cartões
-               existentes na página.
-            */
 
             document
                 .querySelectorAll(
@@ -307,15 +242,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         const id =
                             card.dataset.id;
 
-
                         if (
                             id &&
-                            dados[id]
+                            dados[id] &&
+                            dados[id].escolhido === true
                         ) {
 
                             marcarComoEscolhido(
-                                card,
-                                dados[id]
+                                card
                             );
 
                         } else {
@@ -323,12 +257,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             liberarCartao(
                                 card
                             );
-
                         }
-
                     }
                 );
-
         },
         function (erro) {
 
@@ -336,10 +267,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Erro ao carregar presentes:",
                 erro
             );
-
         }
     );
-
 
 
     /* =====================================================
@@ -353,28 +282,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 "click",
                 function () {
 
-                    /*
-                       Se já estiver desativado,
-                       não abre novamente.
-                    */
-
-                    if (
-                        botao.disabled
-                    ) {
+                    if (botao.disabled) {
                         return;
                     }
-
 
                     cardSelecionado =
                         botao.closest(
                             ".presente-card"
                         );
 
-
                     if (!cardSelecionado) {
                         return;
                     }
-
 
                     const nomePresente =
                         cardSelecionado
@@ -382,34 +301,25 @@ document.addEventListener("DOMContentLoaded", function () {
                             .textContent
                             .trim();
 
-
                     nomePresenteModal.textContent =
                         nomePresente;
 
-
                     nomeInput.value = "";
-
 
                     modal.classList.add(
                         "aberto"
                     );
 
-
                     setTimeout(
                         function () {
-
                             nomeInput.focus();
-
                         },
                         100
                     );
-
                 }
             );
-
         }
     );
-
 
 
     /* =====================================================
@@ -422,16 +332,9 @@ document.addEventListener("DOMContentLoaded", function () {
             "aberto"
         );
 
-
-        cardSelecionado =
-            null;
-
-
-        nomeInput.value =
-            "";
-
+        cardSelecionado = null;
+        nomeInput.value = "";
     }
-
 
 
     fecharModal.addEventListener(
@@ -439,17 +342,11 @@ document.addEventListener("DOMContentLoaded", function () {
         fechar
     );
 
-
     cancelar.addEventListener(
         "click",
         fechar
     );
 
-
-
-    /* =====================================================
-       CLICAR FORA
-    ===================================================== */
 
     modal.addEventListener(
         "click",
@@ -458,14 +355,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (
                 evento.target === modal
             ) {
-
                 fechar();
-
             }
-
         }
     );
-
 
 
     /* =====================================================
@@ -476,12 +369,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "click",
         async function () {
 
-            if (
-                !cardSelecionado
-            ) {
-
+            if (!cardSelecionado) {
                 return;
-
             }
 
 
@@ -489,9 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 nomeInput.value.trim();
 
 
-            if (
-                nome === ""
-            ) {
+            if (!nome) {
 
                 alert(
                     "Digite seu nome para continuar."
@@ -500,7 +387,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 nomeInput.focus();
 
                 return;
-
             }
 
 
@@ -522,135 +408,108 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
                 return;
-
             }
 
 
-            /*
-               Referência específica do presente:
-
-               presentes/
-                   cozinha/
-                       panela/
-                   quarto-sala/
-                       jogo-de-cama/
-            */
-
-            const presenteRef =
-                ref(
-                    db,
-                    "presentes/" +
-                    categoria +
-                    "/" +
-                    id
-                );
-
-
-            /*
-               Desabilita temporariamente
-               para evitar dois cliques.
-            */
-
-            confirmar.disabled =
-                true;
-
-            confirmar.textContent =
-                "Salvando...";
+            confirmar.disabled = true;
+            confirmar.textContent = "Salvando...";
 
 
             try {
 
                 /*
-                   TRANSACTION
+                   PRIMEIRO:
 
-                   Isso é importante porque impede
-                   duas pessoas de escolherem o mesmo
-                   presente ao mesmo tempo.
+                   Reserva o presente no status público.
+
+                   Não existe nome aqui.
                 */
+
+                const presenteStatusRef =
+                    ref(
+                        db,
+                        "status-presentes/" +
+                        categoria +
+                        "/" +
+                        id
+                    );
+
 
                 const resultado =
                     await runTransaction(
-                        presenteRef,
-                        function (
-                            atual
-                        ) {
+                        presenteStatusRef,
+                        function (atual) {
 
                             /*
-                               Se já existe alguém,
+                               Se já foi escolhido,
                                não altera.
                             */
 
-                            if (
-                                atual !== null
-                            ) {
-
+                            if (atual !== null) {
                                 return;
-
                             }
 
 
-                            /*
-                               Primeiro a escolher
-                               fica registrada.
-                            */
-
                             return {
-
-                                nome:
-                                    nome,
-
-                                presente:
-                                    nomePresente,
-
-                                categoria:
-                                    categoria,
-
-                                escolhidoEm:
-                                    new Date()
-                                        .toISOString()
-
+                                escolhido: true
                             };
-
                         }
                     );
 
 
-                /*
-                   Verifica se a transação foi
-                   realmente confirmada.
-                */
-
-                if (
-                    resultado.committed
-                ) {
+                if (!resultado.committed) {
 
                     fechar();
-
-
-                    alert(
-                        "Presente escolhido com sucesso! ❤️"
-                    );
-
-
-                } else {
-
-                    /*
-                       Outra pessoa escolheu
-                       antes.
-                    */
-
-                    fechar();
-
 
                     alert(
                         "Esse presente acabou de ser escolhido por outra pessoa. Escolha outro presente. ❤️"
                     );
 
+                    return;
                 }
 
-            }
 
-            catch (erro) {
+                /*
+                   SEGUNDO:
+
+                   Salva os dados da pessoa
+                   em uma área separada.
+
+                   Essa área NÃO será lida
+                   pelo site dos convidados.
+                */
+
+                const reservaRef =
+                    ref(
+                        db,
+                        "reservas/" +
+                        categoria +
+                        "/" +
+                        id
+                    );
+
+
+                await update(
+                    reservaRef,
+                    {
+                        nome: nome,
+                        presente: nomePresente,
+                        categoria: categoria,
+                        escolhidoEm:
+                            new Date().toISOString()
+                    }
+                );
+
+
+                fechar();
+
+
+                alert(
+                    "Presente escolhido com sucesso! ❤️"
+                );
+
+
+            } catch (erro) {
 
                 console.error(
                     "Erro ao salvar presente:",
@@ -658,26 +517,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                alert(
-                    "Não foi possível salvar a escolha. Verifique sua conexão e tente novamente."
-                );
+                /*
+                   Se o status foi salvo mas os dados
+                   privados falharam, avisamos.
+                */
 
+                alert(
+                    "Não foi possível finalizar a escolha. Tente novamente."
+                );
             }
 
 
-            confirmar.disabled =
-                false;
-
+            confirmar.disabled = false;
             confirmar.textContent =
-                "Confirmar presente";
-
+                "Confirmar escolha";
         }
     );
 
 
-
     /* =====================================================
-       ENTER NO CAMPO DE NOME
+       ENTER
     ===================================================== */
 
     nomeInput.addEventListener(
@@ -691,9 +550,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 evento.preventDefault();
 
                 confirmar.click();
-
             }
-
         }
     );
 
