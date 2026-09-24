@@ -1139,144 +1139,112 @@ section{
 }
 
 
-/* =========================================================
-   CONFIRMAÇÃO
+
+}
+
+./* =========================================================
+   RSVP — CONFIRMAÇÃO DE PRESENÇA
 ========================================================= */
 
-.confirmacao{
+const confirmForm = document.getElementById("confirmForm");
+const nomeConvidado = document.getElementById("nomeConvidado");
+const confirmationModal = document.getElementById("confirmationModal");
+const modalGuestName = document.getElementById("modalGuestName");
+const modalBack = document.getElementById("modalBack");
+const modalConfirm = document.getElementById("modalConfirm");
+const confirmMessage = document.getElementById("confirmMessage");
 
-    background:var(--paper);
+let nomePendente = "";
 
-    text-align:center;
-}
+confirmForm.addEventListener("submit", (event) => {
 
-.confirm-card{
+    event.preventDefault();
+    event.stopPropagation();
 
-    max-width:600px;
+    const nome = nomeConvidado.value.trim();
 
-    margin:40px auto 0;
+    if (!nome) return;
 
-    padding:50px 25px;
+    nomePendente = nome;
 
-    border:
-        1px solid
-        rgba(165,138,96,.22);
+    modalGuestName.textContent = nome;
 
-    background:#fffdf9;
+    confirmationModal.classList.add("active");
 
-    box-shadow:
-        0 12px 35px
-        rgba(41,28,14,.07);
-}
+});
 
-.confirm-card h3{
 
-    font-family:'Cormorant Garamond',serif;
+modalBack.addEventListener("click", () => {
 
-    font-size:44px;
+    confirmationModal.classList.remove("active");
 
-    font-weight:500;
+    nomePendente = "";
 
-    color:var(--brown-dark);
-}
+});
 
-.confirm-card p{
 
-    max-width:470px;
+modalConfirm.addEventListener("click", async () => {
 
-    margin:15px auto 28px;
+    if (!nomePendente) return;
 
-    font-family:'Cormorant Garamond',serif;
+    modalConfirm.disabled = true;
 
-    font-size:19px;
+    try {
 
-    line-height:1.5;
-}
+        const confirmacoesRef = ref(
+            db,
+            "confirmacoes"
+        );
 
-.confirm-form{
+        await push(confirmacoesRef, {
 
-    display:flex;
+            nome: nomePendente,
 
-    flex-direction:column;
+            confirmadoEm:
+                new Date().toISOString()
 
-    gap:12px;
-}
+        });
 
-.confirm-form input{
 
-    width:100%;
+        confirmationModal.classList.remove(
+            "active"
+        );
 
-    height:52px;
+        confirmMessage.textContent =
+            "Presença confirmada com sucesso! ❤️";
 
-    padding:0 16px;
+        confirmMessage.className =
+            "confirm-message success";
 
-    border:
-        1px solid
-        #d9d0c3;
+        confirmForm.reset();
 
-    background:#fff;
+        nomePendente = "";
 
-    font-family:'Montserrat',sans-serif;
 
-    font-size:12px;
+    } catch (error) {
 
-    color:var(--text);
+        console.error(
+            "ERRO FIREBASE:",
+            error
+        );
 
-    outline:none;
-}
+        confirmationModal.classList.remove(
+            "active"
+        );
 
-.confirm-form input:focus{
+        confirmMessage.textContent =
+            "Não foi possível confirmar agora. Verifique a conexão com o Firebase.";
 
-    border-color:var(--gold);
-}
+        confirmMessage.className =
+            "confirm-message error";
 
-.confirm-form button{
+    } finally {
 
-    height:52px;
+        modalConfirm.disabled = false;
 
-    border:0;
+    }
 
-    background:var(--brown-dark);
-
-    color:white;
-
-    font-family:'Montserrat',sans-serif;
-
-    font-size:8px;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
-
-    cursor:pointer;
-
-    transition:.3s ease;
-}
-
-.confirm-form button:hover{
-
-    background:var(--gold);
-}
-
-.confirm-message{
-
-    margin-top:18px;
-
-    font-size:11px;
-
-    line-height:1.5;
-}
-
-.confirm-message.success{
-
-    color:#52604b;
-}
-
-.confirm-message.error{
-
-    color:#8b5148;
-}
-
+});
 
 /* =========================================================
    MODAL
