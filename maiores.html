@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Maiores | Sabrina & Mateus</title>
+
+    <link rel="stylesheet" href="style.css1.css">
+
+</head>
+
+<body
+    class="pagina-categoria"
+    data-categoria="maiores"
+>
+
+<header class="site-header">
+
+    <div class="logo">
+        Sabrina <span>&</span> Mateus
+    </div>
+
+    <button class="menu-toggle" aria-label="Abrir menu">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+    <nav class="menu">
+
+        <a href="index.html">Início</a>
+
+        <a href="index.html#historia">
+            Nossa história
+        </a>
+
+        <a href="index.html#casamento">
+            Casamento
+        </a>
+
+        <a href="presentes.html" class="ativo">
+            Presentes
+        </a>
+
+        <a href="index.html#rsvp">
+            RSVP
+        </a>
+
+        <a href="index.html#recadinhos">
+            Recadinhos
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="categoria-hero">
+
+        <a href="presentes.html" class="voltar-lista">
+            ← Voltar para lista
+        </a>
+
+        <p class="pequeno-titulo">
+            NOSSA LISTA
+        </p>
+
+        <h1>
+            Maiores
+        </h1>
+
+        <div class="linha-decorativa"></div>
+
+        <p>
+            Grandes presentes que vão fazer parte
+            da nossa nova casa.
+        </p>
+
+    </section>
+
+
+    <section class="categoria-detalhes">
+
+        <div class="container">
+
+            <div class="moodboard">
+
+                <img
+                    src="maiores.jpg"
+                    alt="Inspirações para os itens maiores"
+                >
+
+                <div class="moodboard-legenda">
+                    Imagem de inspiração. Os itens podem variar
+                    em modelo, marca e aparência.
+                </div>
+
+            </div>
+
+
+            <div class="lista-itens">
+
+                <div class="lista-cabecalho">
+
+                    <span>
+                        MAIORES
+                    </span>
+
+                    <h2>
+                        Escolha um presente
+                    </h2>
+
+                    <p>
+                        Escolha um dos itens abaixo para
+                        contribuir com a nossa nova casa.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="lista-presentes"
+                    class="presentes-grid"
+                >
+
+                    <div
+                        class="presente-card"
+                        data-id="presente-088"
+                    >
+
+                        <h3>
+                            Micro-ondas
+                        </h3>
+
+                        <button>
+                            Escolher presente
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="presente-card"
+                        data-id="presente-089"
+                    >
+
+                        <h3>
+                            Fogão
+                        </h3>
+
+                        <button>
+                            Escolher presente
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="presente-card"
+                        data-id="presente-090"
+                    >
+
+                        <h3>
+                            Geladeira
+                        </h3>
+
+                        <button>
+                            Escolher presente
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="presente-card"
+                        data-id="presente-091"
+                    >
+
+                        <h3>
+                            Máquina de lavar
+                        </h3>
+
+                        <button>
+                            Escolher presente
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+        Sabrina & Mateus
+    </p>
+
+    <span>
+        18 de dezembro de 2026
+    </span>
+
+</footer>
+
+
+<div
+    id="modal-presente"
+    class="modal"
+>
+
+    <div class="modal-conteudo">
+
+        <button
+            id="fechar-modal"
+            class="modal-fechar"
+        >
+            ×
+        </button>
+
+        <p class="pequeno-titulo">
+            NOSSA LISTA
+        </p>
+
+        <div class="linha-decorativa"></div>
+
+        <h2 id="modal-pergunta">
+            Você escolheu:
+        </h2>
+
+        <p id="modal-nome-presente"></p>
+
+        <div id="modal-nome-area">
+
+            <label for="nome-convidado">
+                Digite seu nome
+            </label>
+
+            <input
+                type="text"
+                id="nome-convidado"
+                placeholder="Seu nome"
+                autocomplete="name"
+            >
+
+            <button
+                id="modal-confirmar"
+                class="modal-confirmar"
+            >
+                Confirmar escolha
+            </button>
+
+            <button
+                id="modal-cancelar"
+                style="
+                    background: transparent;
+                    border: none;
+                    margin-top: 10px;
+                "
+            >
+                Cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module" src="script.js1.js"></script>
+
+</body>
+
+</html>
