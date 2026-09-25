@@ -1,243 +1,1251 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#291C0E">
+<title>Lista de Presentes | Sabrina & Mateus</title>
 
-    <title>Lista de Presentes | Sabrina & Mateus</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Georgia,"Times New Roman",serif;background:#f7f4ef;color:#252525}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+.site-header{position:sticky;top:0;z-index:1000;width:100%;display:flex;align-items:center;justify-content:space-between;padding:20px 7%;background:rgba(247,244,239,.96);border-bottom:1px solid #ddd5c9;backdrop-filter:blur(10px)}
+.logo{font-size:23px;letter-spacing:1px;color:#292929}.logo span{color:#c9a66b;margin:0 4px}
+.menu{display:flex;gap:28px}.menu a{position:relative;font-family:Arial,sans-serif;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:#555}
+.menu a::after{content:"";position:absolute;left:0;bottom:-7px;width:0;height:1px;background:#c7a36a;transition:.3s}
+.menu a:hover::after,.menu a.ativo::after{width:100%}.menu a.ativo{color:#242424}
+.menu-toggle{display:none;border:0;background:transparent;cursor:pointer}.menu-toggle span{display:block;width:25px;height:1px;margin:5px 0;background:#252525}
+.container{width:min(1150px,90%);margin:0 auto}
+.pequeno-titulo{font-family:Arial,sans-serif;font-size:11px;letter-spacing:3px;color:#b18d55;text-transform:uppercase}
+.linha-decorativa{width:55px;height:1px;margin:22px auto;background:#c9a66b}
 
-    <link rel="stylesheet" href="style.css1.css">
+.lista-hero{text-align:center;padding:90px 20px 60px}
+.lista-hero h1{margin-top:14px;font-size:clamp(42px,7vw,72px);font-weight:normal;color:#242424}
+.lista-hero>p:not(.pequeno-titulo){max-width:650px;margin:0 auto;font-size:17px;line-height:1.8;color:#666}
+.texto-secundario{margin-top:8px;font-size:13px!important;color:#9a938a!important}
+
+.categorias-presentes{padding:20px 0 65px}
+.categoria-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:25px}
+.categoria-card{display:block;overflow:hidden;background:#fff;border:1px solid #e0d9cf;transition:.35s}
+.categoria-card:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(48,42,35,.10)}
+.categoria-imagem{width:100%;height:250px;overflow:hidden;background:#eeeae4}
+.categoria-imagem img{width:100%;height:100%;object-fit:cover;transition:.6s}
+.categoria-card:hover .categoria-imagem img{transform:scale(1.035)}
+.categoria-conteudo{padding:25px 28px 30px}
+.categoria-numero{font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;color:#b99a68}
+.categoria-conteudo h2{margin-top:8px;font-size:29px;font-weight:normal;color:#292929}
+.categoria-conteudo p{margin-top:10px;font-size:14px;line-height:1.7;color:#777}
+.categoria-link{display:inline-block;margin-top:18px;font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8f6d3e;border-bottom:1px solid #c9a66b;padding-bottom:5px}
+
+.categoria-detalhes{display:none;padding:20px 0 100px}.categoria-detalhes.ativo{display:block}
+.categoria-hero{display:none;text-align:center;padding:45px 20px 35px}.categoria-hero.ativo{display:block}
+.voltar-lista{display:inline-block;margin-bottom:35px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;color:#7b6b58;text-transform:uppercase}
+.categoria-hero h1{margin-top:15px;font-size:clamp(42px,7vw,68px);font-weight:normal}
+.categoria-hero>p:last-child{max-width:600px;margin:0 auto;color:#777;font-size:16px;line-height:1.8}
+.moodboard{max-width:900px;margin:0 auto 55px;background:#fff;padding:12px;border:1px solid #ddd5ca;box-shadow:0 18px 50px rgba(46,40,33,.08)}
+.moodboard-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.moodboard-grid.single{grid-template-columns:1fr}
+.moodboard img{width:100%;height:330px;object-fit:cover}.moodboard-grid.single img{height:430px}
+.moodboard-legenda{padding:15px 12px 8px;text-align:center;font-family:Arial,sans-serif;font-size:10px;letter-spacing:.8px;color:#999;text-transform:uppercase}
+.lista-itens{max-width:1000px;margin:0 auto}.lista-cabecalho{text-align:center;margin-bottom:35px}
+.lista-cabecalho>span{font-family:Arial,sans-serif;font-size:10px;letter-spacing:3px;color:#b18b52}
+.lista-cabecalho h2{margin-top:10px;font-size:37px;font-weight:normal}.lista-cabecalho p{margin-top:10px;font-size:14px;color:#777}
+.presentes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.presente-card{display:flex;flex-direction:column;min-height:190px;padding:24px;background:#fff;border:1px solid #dfd8cf;transition:.3s}
+.presente-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(40,35,30,.08)}
+.presente-card h3{flex:1;font-size:19px;font-weight:normal;line-height:1.4;color:#292929}
+.quantidade{margin-top:8px;font-family:Arial,sans-serif;font-size:10px;letter-spacing:1px;color:#9b8d7b;text-transform:uppercase}
+.presente-card button{width:100%;margin-top:20px;padding:12px 10px;border:1px solid #b99862;background:transparent;color:#85683e;font-family:Arial,sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.3s}
+.presente-card button:hover{background:#b99862;color:#fff}
+.presente-card.escolhido{background:#eeebe5;opacity:.72}.presente-card.esgotado{opacity:.58}
+.presente-card.escolhido h3,.presente-card.esgotado h3{color:#777}
+.presente-status{margin-top:15px;font-family:Arial,sans-serif;font-size:9px;letter-spacing:1.2px;color:#8a755b;text-transform:uppercase}
+.lista-final{padding:20px 0 90px}.lista-final-box{padding:65px 30px;text-align:center;background:#e9e1d5;border:1px solid #d8cdbd}
+.lista-final-box span{font-family:Arial,sans-serif;font-size:10px;letter-spacing:3px;color:#9b7b4c}
+.lista-final-box h2{max-width:650px;margin:18px auto;font-size:36px;line-height:1.3;font-weight:normal}.lista-final-box p{color:#716c65;font-size:15px}
+
+.modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(30,27,23,.65)}
+.modal.aberto{display:flex}.modal-conteudo{position:relative;width:min(480px,100%);padding:45px 35px;background:#f9f7f3;text-align:center;border:1px solid #d7c9b7}
+.modal-fechar{position:absolute;top:15px;right:18px;border:0;background:transparent;font-size:24px;color:#777;cursor:pointer}
+.modal-conteudo h2{font-size:28px;font-weight:normal}.modal-conteudo p{margin-top:12px;font-size:14px;line-height:1.7;color:#777}
+.modal-conteudo input{width:100%;margin-top:25px;padding:15px;border:1px solid #d5cdc2;background:#fff;outline:none;font-family:Georgia,serif;font-size:15px}
+.modal-conteudo input:focus{border-color:#b99862}.modal-confirmar{width:100%;margin-top:12px;padding:14px;border:1px solid #b99862;background:#b99862;color:#fff;font-family:Arial,sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.modal-confirmar:disabled{opacity:.6;cursor:wait}.modal-cancelar{width:100%;margin-top:10px;padding:12px;border:1px solid #d5cdc2;background:transparent;color:#777;font-family:Arial,sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.aviso-firebase{display:none;max-width:900px;margin:0 auto 25px;padding:14px 18px;border:1px solid #dfc9a5;background:#f8f0e4;text-align:center;font-family:Arial,sans-serif;font-size:12px;line-height:1.6;color:#725a39}
+.footer{padding:45px 20px;text-align:center;background:#242321;color:#eee}.footer p{font-size:22px}.footer span{display:block;margin-top:8px;font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;color:#bcb6ae}
+
+@media(max-width:850px){
+.menu-toggle{display:block}.menu{position:absolute;top:100%;left:0;width:100%;display:none;flex-direction:column;gap:0;background:#f7f4ef;border-bottom:1px solid #ddd5c9}.menu.aberto{display:flex}.menu a{padding:17px 7%;border-bottom:1px solid #e2dcd4}
+.categoria-grid{grid-template-columns:1fr}.presentes-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+.site-header{padding:17px 5%}.logo{font-size:20px}.lista-hero{padding:70px 20px 50px}.lista-hero h1{font-size:43px}.categoria-imagem{height:220px}.categoria-hero h1{font-size:43px}.moodboard{padding:7px}.moodboard-grid{grid-template-columns:1fr}.moodboard img,.moodboard-grid.single img{height:270px}.moodboard-legenda{font-size:8px}.presentes-grid{grid-template-columns:1fr}.lista-final-box{padding:50px 22px}.lista-final-box h2{font-size:29px}
+}
+</style>
+
+<style>
+.lista-controles{
+  max-width:1100px;
+  margin:25px auto;
+  padding:0 18px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:flex-end;
+  font-family:Arial,sans-serif;
+}
+.lista-controles label{font-weight:700;color:#5a4630}
+.lista-controles select,
+#modal-quantidade select{
+  border:1px solid #c9a66b;
+  border-radius:10px;
+  padding:10px 14px;
+  background:#fff;
+  color:#4d3b28;
+}
+.presentes-grid{
+  max-width:1100px;
+  margin:0 auto 60px;
+  padding:0 18px;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+.presente-card{
+  background:#fff;
+  border:1px solid #e4d5bd;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 5px 18px rgba(55,35,15,.07);
+  display:flex;
+  flex-direction:column;
+  min-height:190px;
+}
+.presente-categoria{
+  font-size:11px;
+  letter-spacing:1.3px;
+  text-transform:uppercase;
+  color:#a47d42;
+}
+.presente-card h3{
+  margin:9px 0 14px;
+  color:#493523;
+  font-family:Georgia,serif;
+  font-size:21px;
+}
+.quantidade{
+  color:#77634d;
+  font-size:14px;
+  margin-bottom:18px;
+}
+.btn-escolher{
+  margin-top:auto;
+  border:0;
+  border-radius:10px;
+  padding:12px 15px;
+  background:#8b6840;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-escolher:hover{filter:brightness(.95)}
+.btn-escolher:disabled{background:#c9c0b5;cursor:not-allowed}
+.presente-card.esgotado{opacity:.72}
+.presente-status{
+  margin-top:9px;
+  color:#8b6840;
+  font-size:12px;
+  text-align:center;
+}
+#modal-presente.aberto{display:flex!important}
+#modal-quantidade{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  margin:12px 0;
+  color:#5a4630;
+}
+#modal-quantidade label{font-weight:700}
+@media(max-width:850px){
+  .presentes-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .lista-controles{justify-content:stretch;flex-direction:column;align-items:stretch}
+  .presentes-grid{grid-template-columns:1fr;padding:0 14px}
+}
+
+.presente-status strong{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:16px;
+  color:var(--marrom);
+}
+</style>
+
+
+<style>
+.categoria-detalhes{display:none;padding:30px 0 80px}
+.categoria-detalhes.ativo{display:block}
+.categoria-card{cursor:pointer;border:1px solid #ded3c4;background:#fff}
+.categoria-card:hover{transform:translateY(-5px)}
+.categoria-hero{text-align:center;padding:15px 20px 35px}
+.categoria-hero h1,.lista-cabecalho h2{font-family:"Cormorant Garamond",Georgia,serif;color:#291C0E}
+.categoria-hero h1{font-size:48px;margin:12px 0}
+.categoria-hero p,.btn-voltar-categoria,.lista-cabecalho p{font-family:Montserrat,Arial,sans-serif}
+.btn-voltar-categoria{border:0;background:none;cursor:pointer;color:#7a6955;margin-bottom:25px}
+.lista-cabecalho{text-align:center;margin-bottom:30px}
+.lista-cabecalho h2{font-size:40px;margin:8px 0}
+.presentes-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:850px){.presentes-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.presentes-grid{grid-template-columns:1fr}.categoria-hero h1{font-size:40px}}
+#modal-quantidade{margin:16px 0}
+#modal-quantidade label{display:block;margin-bottom:6px}
+#modal-quantidade select{width:100%;padding:11px;border:1px solid #d8cdbd;background:#fff}
+</style>
 </head>
 
 <body class="pagina-presentes">
 
-    <!-- CABEÇALHO -->
-    <header class="site-header">
-
-        <div class="logo">
-            Sabrina <span>&</span> Mateus
-        </div>
-
-        <button class="menu-toggle" aria-label="Abrir menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-        <nav class="menu">
-            <a href="index.html">Início</a>
-            <a href="index.html#historia">Nossa história</a>
-            <a href="index.html#casamento">Casamento</a>
-            <a href="presentes.html" class="ativo">Presentes</a>
-            <a href="index.html#rsvp">RSVP</a>
-            <a href="index.html#recadinhos">Recadinhos</a>
-        </nav>
-
-    </header>
-
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main>
-
-        <!-- TOPO DA LISTA -->
-        <section class="lista-hero">
-
-            <p class="pequeno-titulo">NOSSO NOVO LAR</p>
-
-            <h1>Lista de Presentes</h1>
-
-            <div class="linha-decorativa"></div>
-
-            <p>
-                Preparamos esta lista com carinho para reunir algumas
-                inspirações para a nossa nova casa.
-            </p>
-
-            <p class="texto-secundario">
-                As imagens são apenas referências de estilo e modelo.
-            </p>
-
-        </section>
-
-
-        <!-- CATEGORIAS -->
-        <section class="categorias-presentes">
-
-            <div class="container">
-
-                <div class="categoria-grid">
-
-
-                    <!-- COZINHA -->
-                    <a href="cozinha.html" class="categoria-card">
-
-                        <div class="categoria-imagem">
-                            <img
-                                src="cozinha.jpg"
-                                alt="Inspirações para cozinha"
-                            >
-                        </div>
-
-                        <div class="categoria-conteudo">
-
-                            <span class="categoria-numero">01</span>
-
-                            <h2>Cozinha</h2>
-
-                            <p>
-                                Itens para deixar nossa cozinha
-                                completa e aconchegante.
-                            </p>
-
-                            <span class="categoria-link">
-                                Ver lista
-                            </span>
-
-                        </div>
-
-                    </a>
-
-                    <!-- QUARTO E SALA -->
-                    <a href="sala.html" class="categoria-card">
-
-                        <div class="categoria-imagem">
-                            <img
-                                src="sala-quarto.jpg"
-                                alt="Inspirações para quarto e sala"
-                            >
-                        </div>
-
-                        <div class="categoria-conteudo">
-
-                            <span class="categoria-numero">03</span>
-
-                            <h2>Quarto & Sala</h2>
-
-                            <p>
-                                Detalhes para deixar nosso lar
-                                ainda mais confortável.
-                            </p>
-
-                            <span class="categoria-link">
-                                Ver lista
-                            </span>
-
-                        </div>
-
-                    </a>
-
-
-                    <!-- BANHEIRO -->
-                    <a href="banheiro.html" class="categoria-card">
-
-                        <div class="categoria-imagem">
-                            <img
-                                src="banheiro.jpg"
-                                alt="Inspirações para banheiro"
-                            >
-                        </div>
-
-                        <div class="categoria-conteudo">
-
-                            <span class="categoria-numero">04</span>
-
-                            <h2>Banheiro</h2>
-
-                            <p>
-                                Itens para trazer praticidade
-                                e aconchego ao nosso banheiro.
-                            </p>
-
-                            <span class="categoria-link">
-                                Ver lista
-                            </span>
-
-                        </div>
-
-                    </a>
-
-
-                    <!-- MAIORES -->
-                    <a href="maiores.html" class="categoria-card">
-
-                        <div class="categoria-imagem">
-                            <img
-                                src="maiores.jpg"
-                                alt="Inspirações para itens maiores"
-                            >
-                        </div>
-
-                        <div class="categoria-conteudo">
-
-                            <span class="categoria-numero">05</span>
-
-                            <h2>Maiores</h2>
-
-                            <p>
-                                Alguns itens maiores que também
-                                fazem parte do nosso novo lar.
-                            </p>
-
-                            <span class="categoria-link">
-                                Ver lista
-                            </span>
-
-                        </div>
-
-                    </a>
-
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- FRASE FINAL -->
-        <section class="lista-final">
-
-            <div class="container">
-
-                <div class="lista-final-box">
-
-                    <span>UM PEDACINHO DE CARINHO</span>
-
-                    <h2>
-                        Mais importante que o presente
-                        é ter você conosco.
-                    </h2>
-
-                    <p>
-                        Obrigada por fazer parte desse momento
-                        tão especial das nossas vidas.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- RODAPÉ -->
-    <footer class="footer">
-
-        <p>Sabrina & Mateus</p>
-
-        <span>
-            18 de dezembro de 2026
-        </span>
-
-    </footer>
-
-
-    <!-- JAVASCRIPT -->
-    <script src="script.js1.js"></script>
-
+<header class="site-header">
+    <div class="logo">Sabrina <span>&</span> Mateus</div>
+
+    <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu">
+        <a href="index.html">Início</a>
+        <a href="index.html#historia">Nossa história</a>
+        <a href="index.html#casamento">Casamento</a>
+        <a href="presentes.html" class="ativo">Presentes</a>
+        <a href="index.html#rsvp">RSVP</a>
+        <a href="index.html#recadinhos">Recadinhos</a>
+    </nav>
+</header>
+
+
+<div class="lista-controles">
+  <label for="filtro-categoria">Escolha uma categoria:</label>
+  <select id="filtro-categoria"></select>
+</div>
+<section id="lista-presentes" class="presentes-grid"></section>
+<main>
+<section class="lista-hero">
+    <p class="pequeno-titulo">NOSSO NOVO LAR</p>
+    <h1>Lista de Presentes</h1>
+    <div class="linha-decorativa"></div>
+    <p>Preparamos esta lista com carinho para reunir algumas inspirações para a nossa nova casa.</p>
+    <p class="texto-secundario">As imagens são apenas referências de estilo e modelo.</p>
+</section>
+
+<div id="aviso-firebase" class="aviso-firebase">
+    A conexão com a lista ainda não foi configurada. Insira sua configuração do Firebase no bloco indicado no final deste arquivo.
+</div>
+
+<section id="pagina-categorias" class="categorias-presentes">
+<div class="container">
+<div id="categoria-grid" class="categoria-grid"></div>
+</div>
+</section>
+
+<section id="pagina-categoria" class="categoria-detalhes" aria-hidden="true">
+<div class="container">
+<div id="categoria-hero" class="categoria-hero"></div>
+<div class="lista-itens">
+<div class="lista-cabecalho">
+<span>NOSSA LISTA</span>
+<h2 id="titulo-itens">Presentes</h2>
+<p>Escolha um presente para fazer parte do nosso novo lar.</p>
+</div>
+<div id="lista-presentes" class="presentes-grid"></div>
+</div>
+</div>
+</section>
+
+<section class="lista-final">
+<div class="container">
+<div class="lista-final-box">
+    <span>UM PEDACINHO DE CARINHO</span>
+    <h2>Mais importante que o presente é ter você conosco.</h2>
+    <p>Obrigada por fazer parte desse momento tão especial das nossas vidas.</p>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="footer">
+    <p>Sabrina & Mateus</p>
+    <span>18 de dezembro de 2026</span>
+</footer>
+
+<div id="modal-presente" class="modal" aria-hidden="true">
+<div class="modal-conteudo">
+    <button id="fechar-modal" class="modal-fechar" type="button" aria-label="Fechar">×</button>
+    <p class="pequeno-titulo">NOSSA LISTA</p>
+    <div class="linha-decorativa"></div>
+    <h2>Escolher presente</h2>
+    <p>Você escolheu:</p>
+    <p id="modal-nome-presente"></p>
+    <p id="modal-disponibilidade"></p>
+    <div id="modal-quantidade"></div>
+
+    <div id="modal-nome-area">
+        <label for="nome-convidado">Digite seu nome</label>
+        <input type="text" id="nome-convidado" placeholder="Seu nome" autocomplete="name">
+    </div>
+
+    <button id="modal-confirmar" class="modal-confirmar" type="button">Confirmar escolha</button>
+    <button id="modal-cancelar" class="modal-cancelar" type="button">Cancelar</button>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue, runTransaction, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB-TtYGS7XFKanoV5V_xFVi-3ev5W1mdSE",
+  authDomain: "chadepanelasabrinaemateus.firebaseapp.com",
+  databaseURL: "https://chadepanelasabrinaemateus-default-rtdb.firebaseio.com",
+  projectId: "chadepanelasabrinaemateus",
+  storageBucket: "chadepanelasabrinaemateus.firebasestorage.app",
+  messagingSenderId: "491483759100",
+  appId: "1:491483759100:web:291a7def5d0850744bf279",
+  measurementId: "G-NETCX349ME"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const presentes = [
+  {
+    "id": "presente_001",
+    "categoria": "QUARTO",
+    "nome": "Jogo de cama",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_002",
+    "categoria": "QUARTO",
+    "nome": "Lençóis",
+    "quantidadeTotal": 3,
+    "quantidadeEscolhida": 0,
+    "disponivel": 3
+  },
+  {
+    "id": "presente_003",
+    "categoria": "QUARTO",
+    "nome": "Fronhas",
+    "quantidadeTotal": 4,
+    "quantidadeEscolhida": 0,
+    "disponivel": 4
+  },
+  {
+    "id": "presente_004",
+    "categoria": "QUARTO",
+    "nome": "Travesseiros",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_005",
+    "categoria": "QUARTO",
+    "nome": "Protetores de travesseiro",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_006",
+    "categoria": "QUARTO",
+    "nome": "Protetor de colchão",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_007",
+    "categoria": "QUARTO",
+    "nome": "Cobertor",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_008",
+    "categoria": "QUARTO",
+    "nome": "Edredom",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_009",
+    "categoria": "QUARTO",
+    "nome": "Colcha",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_010",
+    "categoria": "QUARTO",
+    "nome": "Manta",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_011",
+    "categoria": "QUARTO",
+    "nome": "Almofadas",
+    "quantidadeTotal": 4,
+    "quantidadeEscolhida": 0,
+    "disponivel": 4
+  },
+  {
+    "id": "presente_012",
+    "categoria": "QUARTO",
+    "nome": "Cabides",
+    "quantidadeTotal": 10,
+    "quantidadeEscolhida": 0,
+    "disponivel": 10
+  },
+  {
+    "id": "presente_013",
+    "categoria": "QUARTO",
+    "nome": "Caixas organizadoras",
+    "quantidadeTotal": 3,
+    "quantidadeEscolhida": 0,
+    "disponivel": 3
+  },
+  {
+    "id": "presente_014",
+    "categoria": "QUARTO",
+    "nome": "Organizadores de gaveta",
+    "quantidadeTotal": 3,
+    "quantidadeEscolhida": 0,
+    "disponivel": 3
+  },
+  {
+    "id": "presente_015",
+    "categoria": "QUARTO",
+    "nome": "Cestos organizadores",
+    "quantidadeTotal": 3,
+    "quantidadeEscolhida": 0,
+    "disponivel": 3
+  },
+  {
+    "id": "presente_016",
+    "categoria": "QUARTO",
+    "nome": "Cortina",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_017",
+    "categoria": "SALA E CASA",
+    "nome": "Manta para sofá",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_018",
+    "categoria": "SALA E CASA",
+    "nome": "Tapete",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_019",
+    "categoria": "SALA E CASA",
+    "nome": "Porta-retratos",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_020",
+    "categoria": "SALA E CASA",
+    "nome": "Organizadores diversos",
+    "quantidadeTotal": 3,
+    "quantidadeEscolhida": 0,
+    "disponivel": 3
+  },
+  {
+    "id": "presente_021",
+    "categoria": "ITENS MAIORES",
+    "nome": "Geladeira",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_022",
+    "categoria": "ITENS MAIORES",
+    "nome": "Fogão",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_023",
+    "categoria": "ITENS MAIORES",
+    "nome": "Micro-ondas",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_024",
+    "categoria": "ITENS MAIORES",
+    "nome": "Máquina de lavar",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_025",
+    "categoria": "ITENS MAIORES",
+    "nome": "Aspirador de pó",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_026",
+    "categoria": "ITENS MAIORES",
+    "nome": "Ferro de passar",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_027",
+    "categoria": "ITENS MAIORES",
+    "nome": "Tábua de passar",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_028",
+    "categoria": "ITENS MAIORES",
+    "nome": "Varal de chão",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_029",
+    "categoria": "ITENS MAIORES",
+    "nome": "Escada doméstica",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_030",
+    "categoria": "BANHEIRO",
+    "nome": "Jogo de toalhas",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_031",
+    "categoria": "BANHEIRO",
+    "nome": "Toalhas de banho",
+    "quantidadeTotal": 4,
+    "quantidadeEscolhida": 0,
+    "disponivel": 4
+  },
+  {
+    "id": "presente_032",
+    "categoria": "BANHEIRO",
+    "nome": "Toalhas de rosto",
+    "quantidadeTotal": 4,
+    "quantidadeEscolhida": 0,
+    "disponivel": 4
+  },
+  {
+    "id": "presente_033",
+    "categoria": "BANHEIRO",
+    "nome": "Tapetes para banheiro",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_034",
+    "categoria": "BANHEIRO",
+    "nome": "Organizador",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_035",
+    "categoria": "BANHEIRO",
+    "nome": "Cesto para banheiro",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_036",
+    "categoria": "MESA E SERVIR",
+    "nome": "Jogo de pratos",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_037",
+    "categoria": "MESA E SERVIR",
+    "nome": "Jogo de copos",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_038",
+    "categoria": "MESA E SERVIR",
+    "nome": "Jogo de talheres",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_039",
+    "categoria": "MESA E SERVIR",
+    "nome": "Jogo de xícaras",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_040",
+    "categoria": "MESA E SERVIR",
+    "nome": "Jogo de taças",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_041",
+    "categoria": "MESA E SERVIR",
+    "nome": "Jarras",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_042",
+    "categoria": "MESA E SERVIR",
+    "nome": "Travessas",
+    "quantidadeTotal": 3,
+    "quantidadeEscolhida": 0,
+    "disponivel": 3
+  },
+  {
+    "id": "presente_043",
+    "categoria": "MESA E SERVIR",
+    "nome": "Tigelas",
+    "quantidadeTotal": 3,
+    "quantidadeEscolhida": 0,
+    "disponivel": 3
+  },
+  {
+    "id": "presente_044",
+    "categoria": "MESA E SERVIR",
+    "nome": "Saladeira",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_045",
+    "categoria": "MESA E SERVIR",
+    "nome": "Petisqueira",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_046",
+    "categoria": "MESA E SERVIR",
+    "nome": "Açucareiro",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_047",
+    "categoria": "MESA E SERVIR",
+    "nome": "Manteigueira",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_048",
+    "categoria": "MESA E SERVIR",
+    "nome": "Saleiro",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_049",
+    "categoria": "MESA E SERVIR",
+    "nome": "Porta-talheres",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_050",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Jogo de panelas",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_051",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Panela de pressão",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_052",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Frigideira",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_053",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Frigideira grande",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_054",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Panela elétrica",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_055",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Leiteira",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_056",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Caldeirão",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_057",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Assadeiras",
+    "quantidadeTotal": 3,
+    "quantidadeEscolhida": 0,
+    "disponivel": 3
+  },
+  {
+    "id": "presente_058",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Formas de bolo",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_059",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Forma de pudim",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_060",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Forma de pizza",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_061",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Forma de pão",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_062",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Potes de vidro",
+    "quantidadeTotal": 3,
+    "quantidadeEscolhida": 0,
+    "disponivel": 3
+  },
+  {
+    "id": "presente_063",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Potes com tampa",
+    "quantidadeTotal": 4,
+    "quantidadeEscolhida": 0,
+    "disponivel": 4
+  },
+  {
+    "id": "presente_064",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Potes de mantimentos",
+    "quantidadeTotal": 4,
+    "quantidadeEscolhida": 0,
+    "disponivel": 4
+  },
+  {
+    "id": "presente_065",
+    "categoria": "PANELAS E PREPARO",
+    "nome": "Potes herméticos",
+    "quantidadeTotal": 4,
+    "quantidadeEscolhida": 0,
+    "disponivel": 4
+  },
+  {
+    "id": "presente_066",
+    "categoria": "ELETRODOMÉSTICOS",
+    "nome": "Liquidificador",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_067",
+    "categoria": "ELETRODOMÉSTICOS",
+    "nome": "Batedeira",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_068",
+    "categoria": "ELETRODOMÉSTICOS",
+    "nome": "Mixer",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_069",
+    "categoria": "ELETRODOMÉSTICOS",
+    "nome": "Air fryer",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_070",
+    "categoria": "ELETRODOMÉSTICOS",
+    "nome": "Sanduicheira",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_071",
+    "categoria": "ELETRODOMÉSTICOS",
+    "nome": "Cafeteira",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_072",
+    "categoria": "ELETRODOMÉSTICOS",
+    "nome": "Chaleira elétrica",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_073",
+    "categoria": "ELETRODOMÉSTICOS",
+    "nome": "Espremedor de frutas",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_074",
+    "categoria": "ELETRODOMÉSTICOS",
+    "nome": "Processador de alimentos",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_075",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Escorredor de louça",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_076",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Escorredor de macarrão",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_077",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Escorredor de talheres",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_078",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Tábua de corte",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_079",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Jogo de facas",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_080",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Ralador",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_081",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Peneiras",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_082",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Abridor de latas",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_083",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Abridor de garrafas",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_084",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Colheres de silicone",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_085",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Espátulas",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_086",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Concha",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_087",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Pegador de macarrão",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_088",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Pegador de alimentos",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_089",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Fouet",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_090",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Medidores",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_091",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Porta-temperos",
+    "quantidadeTotal": 1,
+    "quantidadeEscolhida": 0,
+    "disponivel": 1
+  },
+  {
+    "id": "presente_092",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Luvas térmicas",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_093",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Descansos de panela",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_094",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Avental",
+    "quantidadeTotal": 2,
+    "quantidadeEscolhida": 0,
+    "disponivel": 2
+  },
+  {
+    "id": "presente_095",
+    "categoria": "UTENSÍLIOS",
+    "nome": "Panos de prato",
+    "quantidadeTotal": 6,
+    "quantidadeEscolhida": 0,
+    "disponivel": 6
+  }
+];
+
+const categorias = [
+  {id:"QUARTO", titulo:"Quarto", imagem:"sala-quarto.jpg", frase:"Pequenos detalhes para deixar nosso cantinho mais aconchegante."},
+  {id:"SALA E CASA", titulo:"Sala e Casa", imagem:"sala-quarto.jpg", frase:"Para transformar a nossa casa em um lugar cheio de histórias."},
+  {id:"BANHEIRO", titulo:"Banheiro", imagem:"banheiro.jpg", frase:"Conforto e carinho também moram nos pequenos momentos."},
+  {id:"MESA E SERVIR", titulo:"Mesa e Servir", imagem:"mesa-e-servir.jpg", frase:"Para os almoços demorados, cafés e encontros à mesa."},
+  {id:"PANELAS E PREPARO", titulo:"Panelas e Preparo", imagem:"panelas-e-preparo.jpg", frase:"Para começar a cozinhar muitas histórias juntos."},
+  {id:"ELETRODOMÉSTICOS", titulo:"Eletrodomésticos", imagem:"eletrodomesticos.jpg", frase:"Praticidade para a rotina e para o nosso novo lar."},
+  {id:"UTENSÍLIOS", titulo:"Utensílios", imagem:"utensilios.jpg", frase:"Aqueles detalhes que fazem a casa funcionar e ganhar vida."},
+  {id:"ITENS MAIORES", titulo:"Itens Maiores", imagem:"maiores.jpg", frase:"Sonhos maiores para construir, pouco a pouco, o nosso lar."}
+];
+
+const grid = document.getElementById("categoria-grid");
+const paginaCategorias = document.getElementById("pagina-categorias");
+const paginaCategoria = document.getElementById("pagina-categoria");
+const hero = document.getElementById("categoria-hero");
+const lista = document.getElementById("lista-presentes");
+const titulo = document.getElementById("titulo-itens");
+const modal = document.getElementById("modal-presente");
+const modalNome = document.getElementById("modal-nome-presente");
+const modalDisp = document.getElementById("modal-disponibilidade");
+const modalQtd = document.getElementById("modal-quantidade");
+const nomeInput = document.getElementById("nome-convidado");
+const confirmar = document.getElementById("modal-confirmar");
+const cancelar = document.getElementById("modal-cancelar");
+const fechar = document.getElementById("fechar-modal");
+
+let categoriaAtual = null;
+let presenteAtual = null;
+let quantidadeEscolhida = 1;
+let statusCache = {};
+
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+
+function status(p) { return statusCache[p.id] || {}; }
+function disponivel(p) {
+  const s = status(p);
+  if (typeof s.disponivel === "number") return Math.max(0, s.disponivel);
+  if (s.escolhido === true) return 0;
+  return Number(p.quantidadeTotal || 1);
+}
+
+function renderCategorias() {
+  grid.innerHTML = categorias.map((c,i) => `
+    <button type="button" class="categoria-card" data-categoria="${esc(c.id)}">
+      <div class="categoria-imagem"><img src="${esc(c.imagem)}" alt="${esc(c.titulo)}" loading="${i<2?"eager":"lazy"}"></div>
+      <div class="categoria-conteudo">
+        <span class="categoria-numero">${String(i+1).padStart(2,"0")}</span>
+        <h2>${esc(c.titulo)}</h2>
+        <p>${esc(c.frase)}</p>
+        <span class="categoria-link">Ver presentes</span>
+      </div>
+    </button>`).join("");
+  grid.querySelectorAll(".categoria-card").forEach(b => b.onclick = () => abrirCategoria(b.dataset.categoria));
+}
+
+function abrirCategoria(id) {
+  const c = categorias.find(x => x.id === id);
+  if (!c) return;
+  categoriaAtual = id;
+  titulo.textContent = c.titulo;
+  hero.innerHTML = `
+    <button type="button" class="btn-voltar-categoria" id="voltar-categorias">← Voltar para categorias</button>
+    <p class="categoria-micro">NOSSO NOVO LAR</p>
+    <h1>${esc(c.titulo)}</h1>
+    <div class="linha-decorativa"></div>
+    <p>${esc(c.frase)}</p>`;
+  document.getElementById("voltar-categorias").onclick = voltarCategorias;
+  paginaCategorias.style.display = "none";
+  paginaCategoria.classList.add("ativo");
+  paginaCategoria.setAttribute("aria-hidden","false");
+  renderPresentes();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function voltarCategorias() {
+  categoriaAtual = null;
+  paginaCategoria.classList.remove("ativo");
+  paginaCategoria.setAttribute("aria-hidden","true");
+  paginaCategorias.style.display = "";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderPresentes() {
+  if (!categoriaAtual) return;
+  const itens = presentes.filter(p => p.categoria === categoriaAtual);
+  lista.innerHTML = itens.length ? itens.map(p => {
+    const qtd = disponivel(p);
+    const total = Number(p.quantidadeTotal || 1);
+    const esgotado = qtd <= 0;
+    return `<article class="presente-card ${esgotado?"esgotado":""}">
+      <div class="presente-info">
+        <span class="presente-categoria">${esc(p.categoria)}</span>
+        <h3>${esc(p.nome)}</h3>
+        <div class="quantidade">${total>1 ? `<strong>${qtd}</strong> de ${total} disponíveis` : (esgotado?"Esgotado":"Disponível")}</div>
+      </div>
+      <button class="btn-escolher" data-id="${esc(p.id)}" ${esgotado?"disabled":""}>${esgotado?"Presente esgotado":"Escolher este presente ♡"}</button>
+    </article>`;
+  }).join("") : '<p class="sem-presentes">Nenhum presente encontrado nesta categoria.</p>';
+
+  lista.querySelectorAll(".btn-escolher:not(:disabled)").forEach(b => b.onclick = () => {
+    const p = presentes.find(x => String(x.id) === String(b.dataset.id));
+    if (p) abrirModal(p);
+  });
+}
+
+function abrirModal(p) {
+  presenteAtual = p;
+  quantidadeEscolhida = 1;
+  const qtd = disponivel(p);
+  modalNome.textContent = p.nome;
+  modalDisp.textContent = qtd > 1 ? `${qtd} unidades disponíveis` : "1 unidade disponível";
+  modalQtd.innerHTML = qtd > 1 ? `<label for="qtd-presente">Quantas unidades?</label><select id="qtd-presente">${Array.from({length:qtd},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join("")}</select>` : "";
+  if (qtd > 1) document.getElementById("qtd-presente").onchange = e => quantidadeEscolhida = Number(e.target.value);
+  nomeInput.value = "";
+  modal.classList.add("aberto");
+  modal.setAttribute("aria-hidden","false");
+  setTimeout(()=>nomeInput.focus(),100);
+}
+
+function fecharModal() {
+  modal.classList.remove("aberto");
+  modal.setAttribute("aria-hidden","true");
+  presenteAtual = null;
+}
+
+[fechar,cancelar].forEach(x => x?.addEventListener("click", fecharModal));
+modal?.addEventListener("click", e => { if(e.target === modal) fecharModal(); });
+
+confirmar?.addEventListener("click", async () => {
+  if (!presenteAtual) return;
+  const nome = nomeInput.value.trim();
+  if (!nome) { alert("Digite seu nome para continuar. ♡"); nomeInput.focus(); return; }
+  const p = presenteAtual, qtd = quantidadeEscolhida;
+  confirmar.disabled = true;
+  confirmar.textContent = "Salvando...";
+  try {
+    const r = await runTransaction(ref(db, `status-presentes/${p.categoria}/${p.id}`), atual => {
+      const s = atual || {};
+      const total = Number(s.quantidadeTotal ?? p.quantidadeTotal ?? 1);
+      const atualDisponivel = typeof s.disponivel === "number" ? s.disponivel : (s.escolhido ? 0 : total);
+      if (atualDisponivel < qtd) return;
+      const novo = atualDisponivel - qtd;
+      return {escolhido:novo===0, quantidadeTotal:total, quantidadeEscolhida:total-novo, disponivel:novo, ultimoEscolhidoPor:nome};
+    });
+    if (!r.committed) { fecharModal(); alert("Ops! Outra pessoa acabou de escolher essa quantidade. ♡"); return; }
+    await set(push(ref(db, `reservas/${p.categoria}/${p.id}`)), {nome,presente:p.nome,presenteId:p.id,categoria:p.categoria,quantidade:qtd,escolhidoEm:new Date().toISOString()});
+    fecharModal();
+    alert(`Prontinho, ${nome}! ♡\n\nVocê escolheu: ${p.nome}${qtd>1?`\nQuantidade: ${qtd}`:""}`);
+  } catch(e) {
+    console.error(e);
+    alert("Não foi possível salvar sua escolha. Verifique sua conexão e tente novamente. ♡");
+  } finally {
+    confirmar.disabled = false;
+    confirmar.textContent = "Confirmar escolha";
+  }
+});
+
+onValue(ref(db,"status-presentes"), snap => {
+  statusCache = {};
+  const all = snap.val() || {};
+  Object.values(all).forEach(cat => Object.entries(cat || {}).forEach(([id,s]) => statusCache[id]=s||{}));
+  renderPresentes();
+}, () => renderPresentes());
+
+renderCategorias();
+</script>
 </body>
-
 </html>
